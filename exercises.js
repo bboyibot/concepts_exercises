@@ -140,7 +140,18 @@ function fizzBuzz(n) {    let result = "";
 // starting at the back. The empty string is a palindrome.
 //   isPalindrome("level") -> true
 // ---------------------------------------------------------------------
-function isPalindrome(word) {
+function isPalindrome(word) {let left = 0;
+    let right = word.length - 1;
+
+    while (left < right) {
+
+        if (word[left] !== word[right]) {
+            return false;
+        }
+        left++;
+        right--;
+    }
+    return true;    
 }
 
 

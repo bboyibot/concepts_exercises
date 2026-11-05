@@ -164,12 +164,16 @@ function isPalindrome(word) {let left = 0;
 //             **
 //             ***
 // ---------------------------------------------------------------------
-function buildTriangle(height) {let result = "";
+function buildTriangle(height) {    let result = "";
 
     for (let i = 1; i <= height; i++) {
 
         for (let j = 1; j <= i; j++) {
             result = result + "*";
+        }
+
+        if (i < height) {
+            result = result + "\n";
         }
     }
 
@@ -183,7 +187,18 @@ function buildTriangle(height) {let result = "";
 // You MUST call your function dayName() from exercise 2 for this.
 //   countWeekendDays([1, 6, 7, 3]) -> 2
 // ---------------------------------------------------------------------
-function countWeekendDays(dayNumbers) {
+function countWeekendDays(dayNumbers) {    let count = 0;
+
+    for (let i = 0; i < dayNumbers.length; i++) {
+
+        let day = dayName(dayNumbers[i]);
+
+        if (day === "Saturday" || day === "Sunday") {
+            count++;
+        }
+    }
+
+    return count;
 }
 
 
@@ -194,6 +209,17 @@ function countWeekendDays(dayNumbers) {
 //   pointsToGrade(85) -> 2
 // ---------------------------------------------------------------------
 function pointsToGrade(points) {
+    if (points >= 90) {
+        return 1;
+    } else if (points >= 80) {
+        return 2;
+    } else if (points >= 65) {
+        return 3;
+    } else if (points >= 50) {
+        return 4;
+    } else {
+        return 5;
+    }
 }
 
 
@@ -206,6 +232,28 @@ function pointsToGrade(points) {
 //       5 Insufficient
 // ---------------------------------------------------------------------
 function gradeReport(student) {
+    let grade = pointsToGrade(student.points);
+    let gradeText;
+
+    switch (grade) {
+        case 1:
+            gradeText = "Excellent";
+            break;
+        case 2:
+            gradeText = "Good";
+            break;
+        case 3:
+            gradeText = "Satisfactory";
+            break;
+        case 4:
+            gradeText = "Sufficient";
+            break;
+        case 5:
+            gradeText = "Insufficient";
+            break;
+    }
+
+    return `${student.name}: ${grade} (${gradeText})`;
 }
 
 
@@ -218,6 +266,26 @@ function gradeReport(student) {
 //   rockPaperScissors("rock", "paper") -> "Player 2 wins"
 // ---------------------------------------------------------------------
 function rockPaperScissors(choice1, choice2) {
+    if (choice1 !== "rock" && choice1 !== "paper" && choice1 !== "scissors") {
+        return "Invalid input";
+    }
+    if (choice2 !== "rock" && choice2 !== "paper" && choice2 !== "scissors") {
+        return "Invalid input";
+    }
+
+    if (choice1 === choice2) {
+        return "Draw";
+    }
+
+    if (
+        (choice1 === "rock" && choice2 === "scissors") ||
+        (choice1 === "scissors" && choice2 === "paper") ||
+        (choice1 === "paper" && choice2 === "rock")
+    ) {
+        return "Player 1 wins";
+    } else {
+        return "Player 2 wins";
+    }
 }
 
 
@@ -228,6 +296,19 @@ function rockPaperScissors(choice1, choice2) {
 // highest age, return the one that comes first. Empty array gives "".
 // ---------------------------------------------------------------------
 function findOldest(people) {
+    if (people.length === 0) {
+        return "";
+    }
+
+    let oldestPerson = people[0];
+
+    for (let i = 1; i < people.length; i++) {
+        if (people[i].age > oldestPerson.age) {
+            oldestPerson = people[i];
+        }
+    }
+
+    return oldestPerson.name;   
 }
 
 
@@ -239,6 +320,13 @@ function findOldest(people) {
 //     -> ["Tom"]
 // ---------------------------------------------------------------------
 function namesAtLeastAge(people, minAge) {
+    let result = [];
+    for (let i = 0; i < people.length; i++) {
+        if (people[i].age >= minAge) {
+            result.push(people[i].name);
+        }
+    }
+    return result;
 }
 
 
@@ -250,6 +338,16 @@ function namesAtLeastAge(people, minAge) {
 //   cartTotal([{ item: "Pen", price: 2, quantity: 10 }]) -> 18
 // ---------------------------------------------------------------------
 function cartTotal(cart) {
+    let total = 0;
+    for (let i = 0; i < cart.length; i++) {
+        let item = cart[i];
+        let itemTotal = item.price * item.quantity;
+        if (item.quantity >= 10) {
+            itemTotal *= 0.9; // Apply 10% discount
+        }
+        total += itemTotal;
+    }
+    return total;
 }
 
 
@@ -260,6 +358,13 @@ function cartTotal(cart) {
 //   isPrime(7) -> true,  isPrime(9) -> false
 // ---------------------------------------------------------------------
 function isPrime(n) {
+    if (n < 2) return false;
+    let i = 2;
+    while (i * i <= n) {
+        if (n % i === 0) return false;
+        i++;
+    }
+    return true;
 }
 
 
@@ -270,6 +375,13 @@ function isPrime(n) {
 //   primesUpTo(10) -> [2, 3, 5, 7]
 // ---------------------------------------------------------------------
 function primesUpTo(n) {
+    let primes = [];
+    for (let i = 2; i <= n; i++) {
+        if (isPrime(i)) {
+            primes.push(i);
+        }
+    }
+    return primes;
 }
 
 
